@@ -3,10 +3,27 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
+import { toast } from 'react-toastify';
+
 
 const ModalCreateUser = (props) => {
     const { show, setShow } = props;
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setEmail("");
+        setPassword("");
+        setUserName("");
+        setRole("");
+        setPreviewImage("");
+    }
+
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,8 +47,17 @@ const ModalCreateUser = (props) => {
         formData.append('role', role);
         formData.append('image', image);
 
-        let res = await axios.post('http://127.0.0.1:8000/api/participant', formData);
-        console.log(res);
+        let res = await axios.post('http://127.0.0.1:8000/api/participant', formData).catch((resError) => {
+            let listErrors = Object.values(resError.response.data.errors);
+            listErrors.forEach((error) => {
+                toast.error(error[0]);
+            })
+        });
+
+        if (res.data.status) {
+            toast.success(res.data.message);
+            handleClose();
+        }
     }
 
     return (
