@@ -1,5 +1,4 @@
 import axios from "../utils/axiosCustomize";
-import { toast } from "react-toastify";
 
 const postCreateNewUser = (email, password, userName, role, image) => {
     const formData = new FormData();
@@ -9,7 +8,11 @@ const postCreateNewUser = (email, password, userName, role, image) => {
     formData.append('role', role);
     formData.append('image', image);
 
-    return axios.post('/participant', formData)
+    return axios.post('/participant', formData);
 }
 
-export { postCreateNewUser };
+const getAllUser = () => {
+    return axios.get('/participant/all');
+}
+
+export { postCreateNewUser, getAllUser };
