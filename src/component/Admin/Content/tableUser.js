@@ -1,20 +1,5 @@
-import { getAllUser } from "../../../services/apiServices";
-import { useEffect, useState } from "react";
-
 const TableUser = (props) => {
-    const [listUser, setListUser] = useState([]);
-
-    useEffect(() => {
-        fetchApiUser();
-    }, []);
-
-    const fetchApiUser = async () => {
-        let res = await getAllUser();
-
-        if (res.data.status) {
-            setListUser(res.data.data);
-        }
-    }
+    const { listUser } = props;
 
     return (
         <>
@@ -37,9 +22,9 @@ const TableUser = (props) => {
                             <td>{item.email}</td>
                             <td>{item.role}</td>
                             <td>
-                                <button className="btn btn-secondary">Display</button>
-                                <button className="btn btn-warning ms-2">Update</button>
-                                <button className="btn btn-danger ms-2">Delete</button>
+                                <button onClick={() => props.handleDisplayUser(item)} className="btn btn-secondary">Display</button>
+                                <button onClick={() => props.handleUpdateUser(item)} className="btn btn-warning ms-2">Update</button>
+                                <button onClick={() => props.handleDeleteUser(item)} className="btn btn-danger ms-2">Delete</button>
                             </td>
                         </tr>
                     )

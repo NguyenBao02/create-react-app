@@ -1,28 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { postCreateNewUser } from '../../../../services/apiServices';
+import { postUpdateUser } from '../../../../services/apiServices';
+import _ from 'lodash';
 
 
-const ModalCreateUser = (props) => {
-    const { show, setShow } = props;
+const ModalUpdateUser = (props) => {
+    const { show, setShow, listUserUpdate } = props;
     const handleClose = () => {
         setShow(false);
+        setId("");
         setEmail("");
         setPassword("");
         setUserName("");
-        setRole("");
-        setPreviewImage("");
+        setRole("USER");
+        props.resetUpdateData()
     }
 
     const [email, setEmail] = useState("");
+    const [id, setId] = useState("");
     const [password, setPassword] = useState("");
     const [userName, setUserName] = useState("");
     const [role, setRole] = useState("USER");
     const [image, setImage] = useState("");
-    const [previewImage, setPreviewImage] = useState("")
+    const [previewImage, setPreviewImage] = useState("");
+
+    useEffect(() => {
+        if (!_.isEmpty(listUserUpdate)) {
+            setId(listUserUpdate.id);
+            setEmail(listUserUpdate.email);
+            setPassword(listUserUpdate.password);
+            setUserName(listUserUpdate.username);
+            setRole(listUserUpdate.role);
+            if (listUserUpdate.image) {
+                setPreviewImage(`http://127.0.0.1:8000/images/${listUserUpdate.image}`);
+            }
+        }
+    }, [listUserUpdate]);
 
     const handleChangePreview = (e) => {
         if (e.target && e.target.files && e.target.files[0]) {
@@ -32,7 +48,7 @@ const ModalCreateUser = (props) => {
     }
 
     const handleSubmit = async () => {
-        let res = await postCreateNewUser(email, password, userName, role, image);
+        let res = await postUpdateUser(id, userName, role, image);
 
         if (res.data.status) {
             handleClose();
@@ -45,18 +61,10 @@ const ModalCreateUser = (props) => {
         <>
             <Modal className='modal-create-user' backdrop="static" size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add New User</Modal.Title>
+                    <Modal.Title>Update User</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
-                        <div className="col-md-6">
-                            <label htmlFor="inputEmail4" className="form-label">Email</label>
-                            <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" className="form-control" id="inputEmail4" />
-                        </div>
-                        <div className="col-md-6">
-                            <label htmlFor="inputPassword4" className="form-label">Password</label>
-                            <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" className="form-control" id="inputPassword4" />
-                        </div>
                         <div className="col-md-6">
                             <label htmlFor="inputCity" className="form-label">Username</label>
                             <input onChange={(e) => setUserName(e.target.value)} value={userName} type="text" className="form-control" id="inputCity" />
@@ -104,4 +112,4 @@ const ModalCreateUser = (props) => {
     );
 }
 
-export default ModalCreateUser;
+export default ModalUpdateUser;
