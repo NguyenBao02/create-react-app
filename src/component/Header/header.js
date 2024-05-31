@@ -1,8 +1,10 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
         <div className='container'>
             <Navbar expand="lg" className="bg-body-tertiary p-3" f>
@@ -19,8 +21,8 @@ const Header = () => {
                             <NavLink className='nav-link' to="/admin">Admin</NavLink>
                         </Nav>
                         <Nav className='gap-2'>
-                            <button className='btn px-4 fw-semibold'>Log In</button>
-                            <button className='btn btn-dark px-3'>Log Out</button>
+                            <button className='btn px-4 fw-semibold' onClick={() => navigate('login')}>Log In</button>
+                            <button className='btn btn-dark px-3' onClick={() => navigate('register')}>Sign Up</button>
                         </Nav>
                     </Navbar.Collapse>
                 </div>

@@ -14,6 +14,10 @@ import Admin from './component/Admin/admin';
 import Homepage from './component/Homepage/homepage';
 import DashBoard from './component/Admin/Content/dashBoard';
 import ManagerUser from './component/Admin/Content/manageUser';
+import Login from './component/Auth/login';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SignUp from './component/Auth/signup';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +48,14 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "register",
+    element: <SignUp />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -52,6 +64,21 @@ root.render(
     {/* <React.StrictMode> */}
     <RouterProvider router={router} />
     {/* </React.StrictMode> */}
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    // transition:Bounce,
+    />
+    {/* Same as */}
+    <ToastContainer />
   </Provider>
 );
 

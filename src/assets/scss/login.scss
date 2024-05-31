@@ -1,0 +1,41 @@
+.login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+
+    .login-content {
+        .login-title {
+            display: flex;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .login-welcome {
+            display: flex;
+            justify-content: center;
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .login-form {
+            width: 260px;
+
+            .forgot-password {
+                a {
+                    font-size: 14px;
+                    text-decoration: underline;
+                    color: #777;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

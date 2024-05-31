@@ -32,5 +32,13 @@ const postDeleteUser = (id) => {
     return axios.post('/participant/delete', formData);
 }
 
+const postLoginUser = (email, password) => {
+    return axios.post('/auth/login', { email, password });
+}
 
-export { postCreateNewUser, getAllUser, postUpdateUser, postDeleteUser };
+const postRegisterUser = (email, username, password) => {
+    return axios.post('/auth/register', { email, username, password });
+}
+
+
+export { postCreateNewUser, getAllUser, postUpdateUser, postDeleteUser, postLoginUser, postRegisterUser };
